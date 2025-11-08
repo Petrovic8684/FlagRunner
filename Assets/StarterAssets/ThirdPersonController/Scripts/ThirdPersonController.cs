@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -86,6 +86,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private bool _isRespawning;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -135,7 +136,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -213,6 +214,8 @@ namespace StarterAssets
 
         private void Move()
         {
+            if (_isRespawning) return;
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -281,6 +284,8 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            if (_isRespawning) return;
+
             if (Grounded)
             {
                 // reset the fall timeout timer
@@ -387,6 +392,26 @@ namespace StarterAssets
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
+        }
+
+        public void RespawnAt(Vector3 position)
+        {
+            _isRespawning = true;
+            _controller.enabled = false;
+            transform.position = position;
+            _controller.enabled = true;
+
+            _verticalVelocity = 0f;
+            _fallTimeoutDelta = FallTimeout;
+            _jumpTimeoutDelta = JumpTimeout;
+
+            if (_hasAnimator)
+            {
+                _animator.SetBool(_animIDJump, false);
+                _animator.SetBool(_animIDFreeFall, false);
+            }
+
+            _isRespawning = false;
         }
     }
 }
