@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DamageDealer : MonoBehaviour
 {
+    [SerializeField] private AudioSource sound;
     private bool isDeadly = true;
 
     private void OnTriggerStay(Collider other)
@@ -10,6 +11,8 @@ public class DamageDealer : MonoBehaviour
 
         other.GetComponent<PlayerHealth>()?.TakeDamage();
     }
+
+    public void PlaySound() => sound.Play();
 
     public void SetDeadly() => isDeadly = true;
     public void SetNotDeadly() => isDeadly = false;

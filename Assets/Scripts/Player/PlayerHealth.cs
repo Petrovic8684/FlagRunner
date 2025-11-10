@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int startLives = 3;
     [SerializeField] private Animator darknessAnimator;
+    [SerializeField] private AudioSource lifeSound;
+    [SerializeField] private AudioSource deathSound;
 
     public static event Action OnLivesChanged;
 
@@ -52,6 +54,7 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
+        deathSound.PlayOneShot(deathSound.clip);
         controller.RespawnAt(spawnPoint);
     }
 
@@ -60,6 +63,7 @@ public class PlayerHealth : MonoBehaviour
         if (lives <= 0) return;
 
         lives++;
+        lifeSound.PlayOneShot(lifeSound.clip);
         OnLivesChanged?.Invoke();
     }
 }
