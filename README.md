@@ -17,7 +17,7 @@ Most assets were sourced externally to help build the game:
 
 1. Clone or download this repository.
 2. Open **Unity Hub** and add the project.
-3. Open the project in **Unity 2021**.
+3. Open the project in **Unity 6**.
 4. Press **Play** to start the game in the editor.
 
 ## 📄 License
