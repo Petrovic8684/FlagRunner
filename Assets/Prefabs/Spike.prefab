@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 1903666149790524296}
   - component: {fileID: 8529778579602807470}
   - component: {fileID: 7167938755949487928}
-  - component: {fileID: 35270913196469545}
+  - component: {fileID: 7866596106737357244}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -297,7 +297,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.19, y: 0.69, z: 0.53}
   m_Center: {x: -2.7542137e-17, y: -0.005844146, z: -0.0058443546}
---- !u!114 &35270913196469545
+--- !u!114 &7866596106737357244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3512850520819623428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2eb9dd97b250aa02b5f0ffbbdc14a03, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d66eee163e85f8a780305ec8c553529, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  sound: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Spike
+  sound: {fileID: 3184979141200966403}

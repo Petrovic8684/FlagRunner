@@ -88,7 +88,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
-        private bool _isRespawning;
+        private bool _canMove = true;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -125,7 +125,19 @@ namespace StarterAssets
             }
         }
 
+        private void OnEnable()
+        {
+            LevelChanger.OnLevelChangeStarted += DisableMovement;
+            LevelChanger.OnLevelChangeEnded += EnableMovement;
+            PlayerHealth.OnRespawnNeeded += RespawnAt;
+        }
 
+        private void OnDisable()
+        {
+            LevelChanger.OnLevelChangeStarted -= DisableMovement;
+            LevelChanger.OnLevelChangeEnded -= EnableMovement;
+            PlayerHealth.OnRespawnNeeded -= RespawnAt;
+        }
         private void Awake()
         {
             // get a reference to our main camera
@@ -216,7 +228,7 @@ namespace StarterAssets
 
         private void Move()
         {
-            if (_isRespawning) return;
+            if (!_canMove) return;
 
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
@@ -286,7 +298,7 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
-            if (_isRespawning) return;
+            if (!_canMove) return;
 
             if (Grounded)
             {
@@ -397,9 +409,19 @@ namespace StarterAssets
             }
         }
 
+        private void EnableMovement()
+        {
+            _canMove = true;
+        }
+
+        private void DisableMovement()
+        {
+            _canMove = false;
+        }
+
         public void RespawnAt(Vector3 position)
         {
-            _isRespawning = true;
+            DisableMovement();
             _controller.enabled = false;
             transform.position = position;
             _controller.enabled = true;
@@ -414,7 +436,7 @@ namespace StarterAssets
                 _animator.SetBool(_animIDFreeFall, false);
             }
 
-            _isRespawning = false;
+            EnableMovement();
         }
     }
 }

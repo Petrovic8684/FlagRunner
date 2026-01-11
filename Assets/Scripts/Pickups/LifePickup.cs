@@ -1,12 +1,9 @@
 using UnityEngine;
 
-public class LifePickup : MonoBehaviour
+public class LifePickup : Pickup
 {
-    private void OnTriggerEnter(Collider other)
+    protected override void ApplyEffect(Collider player)
     {
-        if (other.gameObject.tag != "Player") return;
-
-        other.GetComponent<PlayerHealth>()?.GainLife();
-        Destroy(gameObject);
+        player.GetComponent<PlayerHealth>()?.GainLife();
     }
 }

@@ -1,12 +1,9 @@
 using UnityEngine;
 
-public class CoinPickup : MonoBehaviour
+public class CoinPickup : Pickup
 {
-    private void OnTriggerEnter(Collider other)
+    protected override void ApplyEffect(Collider player)
     {
-        if (other.gameObject.tag != "Player") return;
-
-        other.GetComponent<PlayerScore>()?.AddScore();
-        Destroy(gameObject);
+        player.GetComponent<PlayerScore>()?.AddScore();
     }
 }
