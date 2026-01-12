@@ -10,5 +10,5 @@ public abstract class Pickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected abstract void ApplyEffect(Collider player);
+    protected abstract void ApplyEffect(Collider other);
 }

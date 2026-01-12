@@ -1,7 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System;
-using System.Threading.Tasks;
 
 public abstract class HUDElement<T> : MonoBehaviour
 {

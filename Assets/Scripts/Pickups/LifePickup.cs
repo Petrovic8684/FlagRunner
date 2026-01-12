@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class LifePickup : Pickup
 {
-    protected override void ApplyEffect(Collider player)
+    protected override void ApplyEffect(Collider other)
     {
-        player.GetComponent<PlayerHealth>()?.GainLife();
+        if (!other.TryGetComponent(out IDamageable damageable)) return;
+
+        damageable.GainLife();
     }
 }

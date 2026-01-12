@@ -1,7 +1,5 @@
-using StarterAssets;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelChanger : MonoBehaviour
@@ -29,25 +27,26 @@ public class LevelChanger : MonoBehaviour
         OnLevelChangeStarted?.Invoke();
 
         RestartDarknessAnimator(Vector3.zero);
-        darknessAnimator.Play("BlacknessFadeReverse", 0, 0f);
+        darknessAnimator?.Play("BlacknessFadeReverse", 0, 0f);
 
-        changeSound.Play();
+        changeSound?.Play();
         StartCoroutine(ChangeLevelAfterDelay(1.05f));
     }
 
     private void RestartDarknessAnimator(Vector3 _)
     {
-        darknessAnimator.Rebind();
-        darknessAnimator.Update(0f);
+        darknessAnimator?.Rebind();
+        darknessAnimator?.Update(0f);
     }
 
     private IEnumerator ChangeLevelAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        darknessAnimator.speed = 1f;
-        OnLevelChangeEnded?.Invoke();
+        if (darknessAnimator != null)
+            darknessAnimator.speed = 1f;
 
+        OnLevelChangeEnded?.Invoke();
         GameManager.Instance.LoadNextScene();
     }
 }

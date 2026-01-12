@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerScore : MonoBehaviour
+public class PlayerScore : MonoBehaviour, IRewardable
 {
     [SerializeField] private AudioSource coinSound;
 
@@ -10,16 +10,18 @@ public class PlayerScore : MonoBehaviour
 
     private void Start()
     {
-        score = PlayerPrefs.GetInt("score", 0);
+        score = DataManager.Instance.Score.GetValue();
         OnScoreChanged?.Invoke(score);
     }
 
     public void AddScore()
     {
-        score += 1;
-        OnScoreChanged?.Invoke(score);
-        PlayerPrefs.SetInt("score", score);
+        score++;
 
-        coinSound.PlayOneShot(coinSound.clip);
+        DataManager.Instance.Score.SetValue(score);
+        DataManager.Instance.Score.Save();
+
+        OnScoreChanged?.Invoke(score);
+        coinSound?.PlayOneShot(coinSound?.clip);
     }
 }

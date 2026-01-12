@@ -1,10 +1,8 @@
 using System;
 using UnityEngine;
-using StarterAssets;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int startLives = 3;
     [SerializeField] private float fallHeight = -5f;
     [SerializeField] private AudioSource lifeSound;
     [SerializeField] private AudioSource deathSound;
@@ -17,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        lives = PlayerPrefs.GetInt("lives", startLives);
+        lives = DataManager.Instance.Lives.GetValue();
         OnLivesChanged?.Invoke(lives);
 
         spawnPoint = transform.position;
@@ -32,13 +30,15 @@ public class PlayerHealth : MonoBehaviour
     public void LoseLife()
     {
         lives--;
+
+        DataManager.Instance.Lives.SetValue(lives);
+        DataManager.Instance.Lives.Save();
+
         OnLivesChanged?.Invoke(lives);
-        PlayerPrefs.SetInt("lives", lives);
 
         if (lives <= 0)
         {
-            PlayerPrefs.SetInt("lives", startLives);
-            PlayerPrefs.SetInt("score", 0);
+            DataManager.Instance.ResetAll();
 
             GameManager.Instance.LoadScene("MenuScene");
             CursorManager.Instance.ShowCursor();
@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
-        deathSound.PlayOneShot(deathSound.clip);
+        deathSound?.PlayOneShot(deathSound?.clip);
         OnRespawnNeeded?.Invoke(spawnPoint);
     }
 
@@ -55,9 +55,11 @@ public class PlayerHealth : MonoBehaviour
         if (lives <= 0) return;
 
         lives++;
-        OnLivesChanged?.Invoke(lives);
-        PlayerPrefs.SetInt("lives", lives);
 
-        lifeSound.PlayOneShot(lifeSound.clip);
+        DataManager.Instance.Lives.SetValue(lives);
+        DataManager.Instance.Lives.Save();
+
+        OnLivesChanged?.Invoke(lives);
+        lifeSound?.PlayOneShot(lifeSound?.clip);
     }
 }

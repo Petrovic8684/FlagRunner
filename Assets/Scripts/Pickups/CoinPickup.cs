@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class CoinPickup : Pickup
 {
-    protected override void ApplyEffect(Collider player)
+    protected override void ApplyEffect(Collider other)
     {
-        player.GetComponent<PlayerScore>()?.AddScore();
+        if (!other.TryGetComponent(out IRewardable rewardable)) return;
+
+        rewardable.AddScore();
     }
 }

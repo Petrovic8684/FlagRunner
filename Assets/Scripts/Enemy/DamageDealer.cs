@@ -10,9 +10,9 @@ public class DamageDealer : MonoBehaviour
 
     public void PlaySound() => sound?.Play();
 
-    protected void ApplyDamage(PlayerHealth target)
+    protected void ApplyDamage(IDamageable target)
     {
         if (!isDeadly) return;
-        target?.LoseLife();
+        target.LoseLife();
     }
 }

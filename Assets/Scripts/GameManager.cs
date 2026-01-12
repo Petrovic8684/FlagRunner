@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-        PlayerPrefs.DeleteAll();
+        DataManager.Instance.ResetAll();
         Application.Quit();
     }
 }
