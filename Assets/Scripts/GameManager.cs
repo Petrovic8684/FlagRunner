@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "EndScene")
-            CursorManager.Instance.ShowCursor();
+        if (scene.name != "EndScene") return;
+
+        CursorManager.Instance.ShowCursor();
+        DataManager.Instance.ResetAll();
     }
 
     public void LoadScene(string sceneName)

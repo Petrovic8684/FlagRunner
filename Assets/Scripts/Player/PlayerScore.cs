@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerScore : MonoBehaviour, IRewardable
 {
-    [SerializeField] private AudioSource coinSound;
-
     public static event Action<int> OnScoreChanged;
     private int score = 0;
 
@@ -22,6 +20,6 @@ public class PlayerScore : MonoBehaviour, IRewardable
         DataManager.Instance.Score.Save();
 
         OnScoreChanged?.Invoke(score);
-        coinSound?.PlayOneShot(coinSound?.clip);
+        AudioManager.Instance.Play(SoundType.Score);
     }
 }

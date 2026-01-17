@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -35,8 +36,6 @@ namespace StarterAssets
         [Space(10)]
         [Tooltip("The height the player can jump")]
         public float JumpHeight = 1.2f;
-
-        [SerializeField] private AudioSource jumpSound;
 
         [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
         public float Gravity = -15.0f;
@@ -89,6 +88,9 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         private bool _canMove = true;
+        private Vector3 spawnPoint;
+        private Quaternion spawnRotPlayer;
+        private Quaternion spawnRotCamera;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -149,6 +151,10 @@ namespace StarterAssets
 
         private void Start()
         {
+            spawnPoint = transform.position;
+            spawnRotPlayer = transform.rotation;
+            spawnRotCamera = _mainCamera.transform.rotation;
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator);
@@ -321,7 +327,8 @@ namespace StarterAssets
                 // Jump
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
-                    jumpSound.Play();
+                    AudioManager.Instance.PlayNoOverlap(SoundType.Jump);
+
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
@@ -412,18 +419,31 @@ namespace StarterAssets
         private void EnableMovement()
         {
             _canMove = true;
+
+            if (_hasAnimator)
+                _animator.speed = 1f;
         }
 
         private void DisableMovement()
         {
             _canMove = false;
+
+            if (_hasAnimator)
+                _animator.speed = 0f;
         }
 
-        public void RespawnAt(Vector3 position)
+        public void RespawnAt()
         {
             DisableMovement();
             _controller.enabled = false;
-            transform.position = position;
+
+            transform.position = spawnPoint;
+            transform.rotation = spawnRotPlayer;
+
+            CinemachineCameraTarget.transform.rotation = spawnRotCamera;
+            _cinemachineTargetYaw = spawnRotCamera.eulerAngles.y;
+            _cinemachineTargetPitch = spawnRotCamera.eulerAngles.x;
+
             _controller.enabled = true;
 
             _verticalVelocity = 0f;

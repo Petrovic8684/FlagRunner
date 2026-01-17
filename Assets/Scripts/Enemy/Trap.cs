@@ -8,10 +8,7 @@ public class Trap : DamageDealer
 
     private void OnTriggerStay(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
-        if (!canDamage) return;
-
-        if (!other.TryGetComponent(out IDamageable target)) return;
+        if (!other.CompareTag("Player") || !canDamage || !other.TryGetComponent(out IDamageable target)) return;
 
         ApplyDamage(target);
         StartCoroutine(DamageCooldown());

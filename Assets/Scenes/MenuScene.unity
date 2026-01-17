@@ -176,6 +176,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fb5b0558ea880b67b47021e7db36ac8, type: 3}
+--- !u!114 &8771657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4237887417195435647, guid: 2fb5b0558ea880b67b47021e7db36ac8, type: 3}
+  m_PrefabInstance: {fileID: 8771656}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164e98d9034af44f6a346629a7e075ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEventRelay
 --- !u!1 &185028753
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,13 +589,13 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1161886677}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: PlayOneShot
-          m_Mode: 2
+        - m_Target: {fileID: 8771657}
+          m_TargetAssemblyTypeName: SoundEventRelay, Assembly-CSharp
+          m_MethodName: Play
+          m_Mode: 1
           m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: a840306cf55f364f3977c6d2f5fcde26, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -1105,23 +1116,18 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1161886677}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: PlayOneShot
-          m_Mode: 2
+        - m_Target: {fileID: 8771657}
+          m_TargetAssemblyTypeName: SoundEventRelay, Assembly-CSharp
+          m_MethodName: Play
+          m_Mode: 1
           m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: a840306cf55f364f3977c6d2f5fcde26, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!82 &1161886677 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 4824387724113851049, guid: 2fb5b0558ea880b67b47021e7db36ac8, type: 3}
-  m_PrefabInstance: {fileID: 8771656}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1783398463 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3707119666793032332, guid: 2fb5b0558ea880b67b47021e7db36ac8, type: 3}

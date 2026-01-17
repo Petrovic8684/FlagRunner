@@ -4,21 +4,16 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private float fallHeight = -5f;
-    [SerializeField] private AudioSource lifeSound;
-    [SerializeField] private AudioSource deathSound;
 
     public static event Action<int> OnLivesChanged;
-    public static event Action<Vector3> OnRespawnNeeded;
+    public static event Action OnRespawnNeeded;
 
     private int lives;
-    private Vector3 spawnPoint;
 
     private void Start()
     {
         lives = DataManager.Instance.Lives.GetValue();
         OnLivesChanged?.Invoke(lives);
-
-        spawnPoint = transform.position;
     }
 
     private void Update()
@@ -46,8 +41,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             return;
         }
 
-        deathSound?.PlayOneShot(deathSound?.clip);
-        OnRespawnNeeded?.Invoke(spawnPoint);
+        AudioManager.Instance.Play(SoundType.Death);
+        OnRespawnNeeded?.Invoke();
     }
 
     public void GainLife()
@@ -60,6 +55,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         DataManager.Instance.Lives.Save();
 
         OnLivesChanged?.Invoke(lives);
-        lifeSound?.PlayOneShot(lifeSound?.clip);
+        AudioManager.Instance.Play(SoundType.Life);
     }
 }
