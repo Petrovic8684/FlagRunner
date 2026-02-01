@@ -10,7 +10,8 @@ public enum SoundType
     Trap,
     Spike,
     LevelChange,
-    MenuButton
+    MenuButton,
+    Monster
 }
 
 public class AudioManager : MonoBehaviour
